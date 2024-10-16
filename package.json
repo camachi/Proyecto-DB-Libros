@@ -1,0 +1,15 @@
+{
+  "name": "proyecto-db-libros",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Carlos Camacho",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "electron": "^32.1.2"
+  }
+}
