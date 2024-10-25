@@ -26,16 +26,67 @@ body{
     justify-content: center;
 }
 
-.menu{
-    position: absolute;
-    right: 100px;
-    height: 40px;
-    width: 80px;
-    background: none;
-    border: 3px solid rgb(0, 255, 119);
-    color: rgb(0, 255, 119);
-    font: bolder;
-    font-size: 15px;
+/* Contenedor del menú */
+.bugger-dropdown {
+  position: absolute;
+  right: 100px;
+}
+
+/* Estilo del botón del menú */
+.menu {
+  height: 50px;
+  width: 100px;
+  background: none;
+  border: 3px solid rgb(0, 255, 119); /* Color del borde */
+  color: rgb(0, 255, 119); /* Color del texto */
+  font-weight: bolder;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover en el botón */
+.menu:hover {
+  background-color: rgb(0, 255, 119);
+  color: black; /* Cambia el color del texto cuando se pasa el cursor */
+}
+
+/* Dropdown menú oculto por defecto */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%; /* Coloca el menú justo debajo del botón */
+  left: 0;
+  background-color: rgb(4, 231, 110);
+  min-width: 100%;
+  padding: 0;
+  margin: 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+/* Elementos del dropdown */
+.dropdown-menu li {
+  list-style: none;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-menu a:hover {
+  background-color: #e0e0e0;
+  color: black;
+}
+
+/* Mostrar el menú cuando se pasa el cursor sobre el contenedor */
+.menu-container:hover .dropdown-menu {
+  display: block;
 }
 
 .entradas{
@@ -150,18 +201,7 @@ background-color:  rgb(65, 65, 65);
     border: 2px solid black;
 }
 
-.options_button:nth-child(1) {
-    background-color: #ffee00;
-  }
-  .options_button:nth-child(2) {
-    background-color: #ff00e1;
-  }
-  .options_button:nth-child(3) {
-    background-color: #00ff00;
-  }
-  .options_button:nth-child(4) {
-    background-color: #ff0000;
-  }
+
 
   .edit_button{
     height: 40px;
@@ -252,4 +292,15 @@ background-color:  rgb(65, 65, 65);
   .search_button:hover{
     border: 2px solid  rgb(0, 255, 119);
     box-shadow: -3px -3px 15px rgb(160, 240, 131);
+  }
+
+  .reporte{
+    display: flex;
+    margin: 5px;
+    border: 1px solid black;
+    width: 70%;
+    height: auto;
+    background-color: #24d28a;
+    justify-content: center;
+    align-items: center;
   }

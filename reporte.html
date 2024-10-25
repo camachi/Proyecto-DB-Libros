@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Profesor</title>
+    <title>Reportes</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +15,6 @@
                 <div class="menu-container">
                   <button class="menu">Menu</button>
                 <ul class="dropdown-menu">
-                   
                     <li><a href="#">Go back</a></li>
                     
                 </ul>
@@ -26,25 +25,17 @@
 
         <div class="contenido_db">
             <div class="search_db_container">
-                <input placeholder="Enter your text..." class="input" name="text" type="text" style="width: 70%;">
+                <select id="opciones" name="opciones" style=" width: 70%;">
+                    <option value="opcion1">Opción 1</option>
+                    <option value="opcion2">Opción 2</option>
+                    <option value="opcion3">Opción 3</option>
+                      </select>
                 <button class="search_button">Search</button>
             </div>
-            <table>
-                <tr>
-                  <th>ID</th>
-                  <th>Nombre</th>
-                  <th>Departamento Academico</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Alfreds Futterkiste</td>
-                  <td>Maria Anders</td>
-                  <td><button class="edit_button">Edit</button></td>
-                  <td><button class="delete_button">Delete</button></td>
-                </tr>
-              </table>
+            <div class="reporte">
+
+                <h1>Elija tipo de reporte</h1>
+            </div>
 
         </div>
 
