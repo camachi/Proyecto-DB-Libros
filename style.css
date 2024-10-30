@@ -1,5 +1,5 @@
 body{
-    background-color: #a0e2b3;
+    background-color: #398950;
     color: rgb(0, 0, 0);
     padding: 0;
     margin: 0;
@@ -303,4 +303,31 @@ background-color:  rgb(65, 65, 65);
     background-color: #24d28a;
     justify-content: center;
     align-items: center;
+  }
+
+  .settings-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     flex-direction: column;
+     border: 1px solid red;
+     height: 100px;
+     width: 100%;
+     margin: 0;
+  }
+  .settings-box h3{
+    margin: 0;
+  }
+
+  .settings-content-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 2px solid rgb(255, 255, 255);
+    height: 40px;
+    width: 40%;
+    margin: 0;
+    color: white;
+    background-color: #2c2c2c;
   }
