@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Profesor</title>
     <link rel="stylesheet" href="style.css">
+    <script src="renderer.js" defer></script>
 </head>
 <body>
     <div class="content">
@@ -34,16 +35,14 @@
                   <th>ID</th>
                   <th>Nombre</th>
                   <th>Departamento Academico</th>
+                  <th>Programa Academico</th>
                   <th>Edit</th>
                   <th>Delete</th>
                 </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Alfreds Futterkiste</td>
-                  <td>Maria Anders</td>
-                  <td><a href="professor.html"><button class="edit_button">Edit</button></a></td>
-                  <td><a href=""><button class="delete_button">Delete</button></a></td>
-                </tr>
+
+              <tbody id="id-render-profesores">
+                 
+              </tbody>
               </table>
 
         </div>
