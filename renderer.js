@@ -14,27 +14,38 @@ async function cargarProfesores() {
 function mostrarProfesores(profesores) {
     console.log('Profesores obtenidos:', profesores); 
     const cuerpoTabla = document.getElementById('id-render-profesores');
-    cuerpoTabla.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar nuevos elementos
+    cuerpoTabla.innerHTML = ''; 
 
     profesores.forEach(profesor => {
-        const fila = document.createElement('tr'); // Crear una nueva fila
+        const fila = document.createElement('tr'); 
 
-        // Crear celdas para cada dato
+        
         fila.innerHTML = `
             <td>${profesor.idprofesores}</td>
             <td>${profesor.nombre}</td>
             <td>${profesor.departamento_academico}</td>
             <td>${profesor.programa_academico}</td>
-            <td><a href="professor.html"><button class="edit_button">Edit</button></a></td>
+            <td><button class="edit_button" data-id="${profesor.idprofesores}" onclick="botonEditarProfesores(this)">Edit</button></td>
             <td><a href=""><button class="delete_button">Delete</button></a></td>
         `;
 
-        // Agregar la fila al cuerpo de la tabla
+       
         cuerpoTabla.appendChild(fila);
     });
 }
 
 
-// Cargar los profesores al inicio
+
 cargarProfesores();
 
+//funcion para boton edit ya que no se puede usar <a> y enviar data-id a la vez 
+function botonEditarProfesores(button) {
+    const profesorId = button.dataset.id; 
+    if (profesorId) {
+        localStorage.setItem('profesorId', profesorId); // Guarda el ID en localStorage
+        
+        window.location.href = 'professor.html'; 
+    } else {
+        console.error('No se encontró el ID del profesor');
+    }
+}

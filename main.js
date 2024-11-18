@@ -1,6 +1,6 @@
 const path = require('path');
 const { app, BrowserWindow, ipcMain } = require('electron');
-const { obtenerProfesores } = require('./query'); 
+const { obtenerProfesores,agregarProfesor,editarProfesor } = require('./query'); 
 
 let mainWindow;
 
@@ -9,10 +9,12 @@ app.on('ready', () => {
         width: 1000,
         height: 1000,
         webPreferences: {
+            preload: path.join(__dirname, 'agregar-profesores.js'),
             nodeIntegration: true,
             contextIsolation: false, 
             autoHideMenuBar: true,
-            icon: path.join(__dirname, 'books.ico') 
+            enableRemoteModule: false,
+            icon: path.resolve(__dirname, 'book.ico')
         }
     });
 
@@ -35,9 +37,34 @@ ipcMain.handle('obtener-profesores', async () => {
     });
 });
 
+ipcMain.handle('agregar-profesor', async (event, data) => {
+    return new Promise((resolve) => {
+      agregarProfesor(data.nombre, data.departamento, data.programa, (error, result) => {
+        if (error) {
+          resolve({ success: false, error });
+        } else {
+          resolve({ success: true });
+        }
+      });
+    });
+  });
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit(); 
     }
 });
 
+
+
+ipcMain.handle('actualizar-profesor', async (event, data) => {
+    const { id, nombre, departamento, programa } = data;
+    return new Promise((resolve) => {
+        editarProfesor(id, nombre, departamento, programa, (error, result) => {
+            if (error) {
+                resolve({ success: false, error });
+            } else {
+                resolve({ success: true });
+            }
+        });
+    });
+});

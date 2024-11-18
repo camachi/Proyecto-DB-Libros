@@ -14,29 +14,29 @@
           <button class="menu">Menu</button>
         <ul class="dropdown-menu">
           <li><a href="index.html">Go Back</a></li>
+          
         </ul>
 
         </div>
       </div>
        
     </div>
-
     <div class="entradas">
       <h3>Nuevo Profesor:</h3>
-        <form>
-            <label for="fname">Nombre:</label>
-            <input placeholder="Enter your text..." class="input" name="text" type="text"><br>
-            <label for="lname">Departamento Academico:</label>
-            <input placeholder="Enter your text..." class="input" name="text" type="text"><br>
-            <label for="lname">Programa Academico:</label>
-            <input placeholder="Enter your text..." class="input" name="text" type="text"><br>
-          </form>
-            <div class="submit_container">
-            <button class="submit_button">Save</button>
-            </div>
-    </div>
-
-
+      <form id="profesorForm">
+        <label for="nombre">Nombre:</label>
+        <input id="nombre" placeholder="Enter your text..." class="input" name="nombre" type="text"><br>
+        
+        <label for="departamento">Departamento Academico:</label>
+        <input id="departamento" placeholder="Enter your text..." class="input" name="departamento" type="text"><br>
+        
+        <label for="programa">Programa Academico:</label>
+        <input id="programa" placeholder="Enter your text..." class="input" name="programa" type="text"><br>
+       
+      </form>
+      <div class="submit_container">
+        <button type="submit" id="submitPROF" class="submit_button">Save</button>
+      </div>
 
     </div>
     

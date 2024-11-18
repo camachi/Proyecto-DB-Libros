@@ -3,6 +3,7 @@
 <head>
   <title>Books.</title>
   <link rel="stylesheet" href="style.css">
+  <script src="professor-edit-script.js" defer></script>
 </head>
 <body>
   <div class="content">
@@ -23,16 +24,16 @@
 
     <div class="entradas">
       <h3>Profesor:</h3>
-        <form>
+        <form id="profesorEditForm">
             <label for="fname">Nombre:</label>
-            <input placeholder="Enter your text..." class="input" name="text" type="text"><br>
+            <input placeholder="Enter your text..." class="input" name="nombre" type="text"><br>
             <label for="lname">Departamento Academico:</label>
-            <input placeholder="Enter your text..." class="input" name="text" type="text"><br>
+            <input placeholder="Enter your text..." class="input" name="departamento" type="text"><br>
             <label for="lname">Programa Academico:</label>
-            <input placeholder="Enter your text..." class="input" name="text" type="text"><br>
+            <input placeholder="Enter your text..." class="input" name="programa" type="text"><br>
           </form>
             <div class="submit_container">
-            <button class="submit_button">Save</button>
+            <button id="submitEdit" class="submit_button">Save</button>
             </div>
     </div>
 
