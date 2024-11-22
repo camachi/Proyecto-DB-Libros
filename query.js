@@ -44,4 +44,11 @@ function editarProfesor(id,nombre, departamento, programa, callback) {
   });
 }
 
-  module.exports = { obtenerProfesores,agregarProfesor,editarProfesor};
+function eliminarProfesor(profesorId, callback) {
+  const sql = `DELETE FROM profesores WHERE idprofesores = ?`;
+  connection.query(sql, [profesorId], (error, results) => {
+      callback(error, results);
+  });
+}
+
+  module.exports = { obtenerProfesores,agregarProfesor,editarProfesor,eliminarProfesor};

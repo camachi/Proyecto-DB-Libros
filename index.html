@@ -3,6 +3,7 @@
 <head>
   <title>Books.</title>
   <link rel="stylesheet" href="style.css">
+  <script src="professor-select-list.js"></script>
 </head>
 <body>
   <div class="content">
@@ -30,9 +31,7 @@
             <input placeholder="Enter your text..." class="input" name="text" type="text"><br>
             <label for="lname">Profesor:</label>
               <select id="opciones" name="opciones">
-            <option value="opcion1">Opción 1</option>
-            <option value="opcion2">Opción 2</option>
-            <option value="opcion3">Opción 3</option>
+                <option value="" disabled selected>Seleccione profesor...</option>
               </select>
             <label for="lname">Fecha:</label>
             <input type="date" class="input"><br>

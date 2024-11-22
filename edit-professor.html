@@ -6,6 +6,8 @@
     <title>Editar Profesor</title>
     <link rel="stylesheet" href="style.css">
     <script src="renderer.js" defer></script>
+    <script src="borrar-script.js" defer></script>
+    <script src="box-confirmacion.js" defer></script>
 </head>
 <body>
     <div class="content">
@@ -48,5 +50,16 @@
         </div>
 
     </div>
+
+    <div id="modal-confirmacion" class="modal">
+      <div class="modal-content">
+          <p>¿Estás seguro que quieres borrar el profesor?</p>
+          <div class="modal-buttons">
+              <button class="btn-si" id="btn-confirmar">Sí</button>
+              <button class="btn-no" id="btn-cancelar">No</button>
+          </div>
+      </div>
+  </div>
+  
 </body>
 </html>

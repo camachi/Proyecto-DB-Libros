@@ -26,7 +26,7 @@ function mostrarProfesores(profesores) {
             <td>${profesor.departamento_academico}</td>
             <td>${profesor.programa_academico}</td>
             <td><button class="edit_button" data-id="${profesor.idprofesores}" onclick="botonEditarProfesores(this)">Edit</button></td>
-            <td><a href=""><button class="delete_button">Delete</button></a></td>
+            <td><button type="button" class="delete_button" data-id="${profesor.idprofesores}">Delete</button></td>
         `;
 
        

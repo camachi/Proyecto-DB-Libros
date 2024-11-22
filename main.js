@@ -1,6 +1,6 @@
 const path = require('path');
 const { app, BrowserWindow, ipcMain } = require('electron');
-const { obtenerProfesores,agregarProfesor,editarProfesor } = require('./query'); 
+const { obtenerProfesores,agregarProfesor,editarProfesor,eliminarProfesor } = require('./query'); 
 
 let mainWindow;
 
@@ -63,6 +63,20 @@ ipcMain.handle('actualizar-profesor', async (event, data) => {
             if (error) {
                 resolve({ success: false, error });
             } else {
+                resolve({ success: true });
+            }
+        });
+    });
+});
+
+ipcMain.handle('eliminar-profesor', async (event, profesorId) => {
+    return new Promise((resolve) => {
+        eliminarProfesor(profesorId, (error, result) => {
+            if (error) {
+                console.error('Error al eliminar el profesor:', error);
+                resolve({ success: false, error });
+            } else {
+                console.log('Profesor eliminado correctamente:', result);
                 resolve({ success: true });
             }
         });
