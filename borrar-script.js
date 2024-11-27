@@ -13,7 +13,10 @@ async function eliminarProfesor(profesorId) {
             }, 2000);
         } else {
             console.error('Error al eliminar el profesor:', respuesta.error);
-            mostrarMensaje('Error al eliminar el profesor:');
+            mostrarMensaje('Este profesor tiene recomendaciones asociadas. Elimine las recomendaciones antes de borrar al profesor.');
+            setTimeout(() => {
+                location.reload();
+            }, 4000);
         }
     } catch (error) {
         console.error('Error de comunicación con el backend:', error);

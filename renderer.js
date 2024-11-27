@@ -12,7 +12,7 @@ async function cargarProfesores() {
 
 // Función para mostrar los profesores en la tabla
 function mostrarProfesores(profesores) {
-    console.log('Profesores obtenidos:', profesores); 
+    console.log('Profesores obtenidos:'); 
     const cuerpoTabla = document.getElementById('id-render-profesores');
     cuerpoTabla.innerHTML = ''; 
 
@@ -24,7 +24,6 @@ function mostrarProfesores(profesores) {
             <td>${profesor.idprofesores}</td>
             <td>${profesor.nombre}</td>
             <td>${profesor.departamento_academico}</td>
-            <td>${profesor.programa_academico}</td>
             <td><button class="edit_button" data-id="${profesor.idprofesores}" onclick="botonEditarProfesores(this)">Edit</button></td>
             <td><button type="button" class="delete_button" data-id="${profesor.idprofesores}">Delete</button></td>
         `;

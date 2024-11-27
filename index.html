@@ -3,7 +3,8 @@
 <head>
   <title>Books.</title>
   <link rel="stylesheet" href="style.css">
-  <script src="professor-select-list.js"></script>
+ 
+  <script src="input-recomendacion.js" defer></script>
 </head>
 <body>
   <div class="content">
@@ -23,23 +24,50 @@
     </div>
 
     <div class="entradas">
-      <h3>Recomendacion</h3>
-        <form>
-            <label for="fname">Autor:</label>
-            <input placeholder="Enter your text..." class="input" name="text" type="text"><br>
-            <label for="lname">Titulo:</label>
-            <input placeholder="Enter your text..." class="input" name="text" type="text"><br>
-            <label for="lname">Profesor:</label>
-              <select id="opciones" name="opciones">
-                <option value="" disabled selected>Seleccione profesor...</option>
-              </select>
-            <label for="lname">Fecha:</label>
-            <input type="date" class="input"><br>
-          </form>
-            <div class="submit_container">
-            <button class="submit_button">Submit</button>
-            </div>
+      <h3>Recomendación</h3>
+      <form id="recomendacionForm">
+          <label for="autor">Autor:</label>
+          <input 
+              id="autor" 
+              placeholder="Ingrese el nombre del autor..." 
+              class="input" 
+              name="autor" 
+              type="text" 
+              
+          >
+          <br>
+          <label for="titulo">Título:</label>
+          <input 
+              id="titulo" 
+              placeholder="Ingrese el título..." 
+              class="input" 
+              name="titulo" 
+              type="text" 
+             
+          >
+          <br>
+          <label for="profesor">Profesor:</label>
+          <select id="opciones" name="profesor" >
+              <option value="" disabled selected>Seleccione profesor...</option>
+              
+          </select>
+          <br>
+          <label for="fecha">Fecha:</label>
+          <input 
+              id="fecha" 
+              type="date" 
+              class="input" 
+              name="fecha" 
+              
+          >
+          <br>
+          
+      </form>
+      <div class="submit_container">
+        <button id="rbtn" type="button"  class="submit_button">Enviar</button>
     </div>
+  </div>
+  
 
     <div class="opciones">
       <a href="add-professor.html"><button style=" background-color: #ff9100;" class="options_button">Agregar Profesor</button></a>

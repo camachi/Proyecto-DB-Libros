@@ -5,21 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Recomendaciones</title>
     <link rel="stylesheet" href="style.css">
+    <script src="renderer-recomendacion.js" defer></script>
+    <script src="box-confirmacion-recomendacion.js" defer></script>
+    <script src="borrar-script-recomendacion.js" defer></script>
 </head>
 <body>
     <div class="content">
-
         <div class="titulo">
             <h2 style="color: white;">Editar Recomendaciones📚</h2>
             <div class="bugger-dropdown">
                 <div class="menu-container">
                   <button class="menu">Menu</button>
                 <ul class="dropdown-menu">
-                  
-                  <li><a href="index.html">Go Back</a></li>
-                    
+                   <li><a href="index.html">Go Back</a></li>
                 </ul>
-        
                 </div>
               </div>
         </div>
@@ -35,21 +34,25 @@
                   <th>Autor</th>
                   <th>Titulo</th>
                   <th>Recomendado por</th>
+                  <th>Fecha</th>
                   <th>Edit</th>
                   <th>Delete</th>
                 </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Alfreds Futterkiste</td>
-                  <td>Biblia</td>
-                  <td>Maria Anders</td>
-                  <td><a href="recomendacion.html"><button class="edit_button">Edit</button></a></td>
-                  <td><button class="delete_button">Delete</button></td>
-                </tr>
-              </table>
-
+              <tbody id="recommendations-body">
+                  <!-- Aquí se llenarán las filas de las recomendaciones -->
+              </tbody>
+            </table>
         </div>
-
     </div>
+
+    <div id="modal-confirmacion" class="modal">
+      <div class="modal-content">
+          <p>¿Estás seguro que quieres borrar la recomendación?</p>
+          <div class="modal-buttons">
+              <button class="btn-si" id="btn-confirmar">Sí</button>
+              <button class="btn-no" id="btn-cancelar">No</button>
+          </div>
+      </div>
+  </div>
 </body>
 </html>

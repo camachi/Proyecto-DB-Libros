@@ -16,6 +16,6 @@ function mostrarMensaje(mensaje) {
     contenedor.appendChild(alerta);
     setTimeout(() => {
         alerta.remove();
-    }, 3000); // Puedes ajustar el tiempo que dura la alerta en pantalla
+    }, 6000); // Puedes ajustar el tiempo que dura la alerta en pantalla
 }
 module.exports = { mostrarMensaje };

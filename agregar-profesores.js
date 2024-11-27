@@ -10,10 +10,10 @@ window.addEventListener('DOMContentLoaded', () => {
   submitButton.addEventListener('click', () => {
     const nombre = form['nombre'].value.trim();
     const departamento = form['departamento'].value.trim();
-    const programa = form['programa'].value.trim();
+    
 
-    if (nombre && departamento && programa) {
-      ipcRenderer.invoke('agregar-profesor', { nombre, departamento, programa })
+    if (nombre && departamento) {
+      ipcRenderer.invoke('agregar-profesor', { nombre, departamento})
         .then(response => {
           if (response.success) {
             
