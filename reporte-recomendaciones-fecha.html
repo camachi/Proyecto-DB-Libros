@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Profesor</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="renderer-reporte-recomendaciones-fecha.js" defer></script>
+    <script src="pdf-descarga-script.js" defer></script>
+    
+</head>
+<body>
+    <div class="content">
+
+        <div class="titulo">
+            <h2 style="color: white;">Reporte📚</h2>
+            <div class="bugger-dropdown">
+                <div class="menu-container">
+                  <button class="menu">Menu</button>
+                <ul class="dropdown-menu">
+                   
+                  <li><a href="reporte.html">Go Back</a></li>
+                    
+                </ul>
+        
+                </div>
+              </div>
+        </div>
+        <div class="search_db_container">
+            <input id="inputYear" placeholder="Escriba el año..." class="input" name="text" type="text" style="width: 70%;">
+            <button class="search_button" id="searchButton">Search</button>
+        </div>
+        <div class="contenido_db_renderer">
+            
+            <img src="Inter-San-German-LOGO.png" alt="Descripción de la imagen">
+            <h3>Reporte</h3>
+            <table>
+
+              <tbody id="id-render-reporte">
+                 
+              </tbody>
+            </table>
+
+        </div>
+        <button id="downloadPDF" class="descargar-pdf">Descargar Pdf</button>
+    </div>
+
+    
+  
+</body>
+</html>

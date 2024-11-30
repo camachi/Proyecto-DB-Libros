@@ -2,18 +2,16 @@ const connection = require('./connection');
 
 
 // Función para obtener todos los profesores
-function obtenerProfesores(callback) {
-    const query = 'SELECT * FROM profesores';
-    connection.query(query, (error, results) => {
-      if (error) {
-        console.error('Error en la consulta:', error);
-        callback(error, null);
-      } else {
-        callback(null, results);
-      }
+function obtenerProfesores(callback, query = 'SELECT * FROM profesores ORDER BY nombre ASC', params = []) {
+    connection.query(query, params, (error, results) => {
+        if (error) {
+            callback(error, null);
+        } else {
+            callback(null, results);
+        }
     });
   }
-
+  
   
 
 function editarProfesor(id,nombre, departamento, callback) {
@@ -53,32 +51,65 @@ function agregarRecomendacion(autor, titulo, idProfesor, fecha, callback) {
   });
 }
 
-function obtenerRecomendaciones(callback) {
-  const sql = `
-      SELECT 
-          r.id, 
-          r.autor, 
-          r.titulo, 
-          r.fecha, 
-          IFNULL(p.nombre, 'Profesor eliminado') AS profesor
-      FROM 
-          recomendaciones r
-      LEFT JOIN 
-          profesores p
-      ON 
-          r.id_profesor = p.idprofesores
-  `;
+function obtenerRecomendaciones(query, callback) {
+    let querySQL = `
+        SELECT 
+            r.id, 
+            r.autor, 
+            r.titulo, 
+            r.fecha, 
+            IFNULL(p.nombre, 'Profesor eliminado') AS profesor
+        FROM 
+            recomendaciones r
+        LEFT JOIN 
+            profesores p ON r.id_profesor = p.idprofesores
+        WHERE 1=1
+    `;
+    const params = [];
   
-  connection.query(sql, (error, results) => {
-      if (error) {
-        
-          callback(error, null);
-      } else {
-        console.log('Resultados de la consulta:', results);
-          callback(null, results);
-      }
-  });
+    if (query) {
+        if (isValidDate(query)) {
+            // Si el valor tiene formato de fecha, buscamos por fecha
+            querySQL += ' AND DATE(r.fecha) = ?';
+            params.push(query);
+        } else if (isYear(query)) {
+            // Si el valor es un año, buscamos por año
+            querySQL += ' AND YEAR(r.fecha) = ?';
+            params.push(query);
+        } else {
+            // Si el valor no es fecha ni año, buscamos por autor o título
+            querySQL += ' AND (r.autor LIKE ? OR r.titulo LIKE ?)';
+            params.push(`%${query}%`, `%${query}%`);
+        }
+    }
+  
+    // Ordenar alfabéticamente por autor
+    querySQL += ' ORDER BY r.autor ASC';  // Cambia 'autor' por 'titulo' si deseas ordenar por título
+  
+    connection.query(querySQL, params, (error, results) => {
+        if (error) {
+            console.error('Error en la consulta:', error);
+            callback(error, null);
+        } else {
+            console.log('Resultados de la consulta:', results);
+            callback(null, results);
+        }
+    });
+  }
+  
+
+// Función para verificar si el valor ingresado es una fecha válida (YYYY-MM-DD)
+function isValidDate(dateString) {
+  const regex = /^\d{4}-\d{2}-\d{2}$/; // Formato: YYYY-MM-DD
+  return dateString.match(regex) !== null;
 }
+
+// Función para verificar si el valor es solo un año (YYYY)
+function isYear(dateString) {
+  const regex = /^\d{4}$/; // Formato: YYYY
+  return dateString.match(regex) !== null;
+}
+
 
 
 const obtenerRecomendacionPorId = (id) => {
@@ -148,6 +179,155 @@ function eliminarRecomendacionPorId(id) {
       });
   });
 }
+function obtenerReporteProfesores(callback) {
+    const sql = `
+        SELECT 
+            r.id AS id_recomendacion,
+            r.autor,
+            r.titulo,
+            r.fecha,
+            IFNULL(p.nombre, 'Profesor eliminado') AS nombre_profesor,
+            IFNULL(p.departamento_academico, 'N/A') AS departamento_profesor
+        FROM 
+            recomendaciones r
+        LEFT JOIN 
+            profesores p
+        ON 
+            r.id_profesor = p.idprofesores
+        ORDER BY 
+            nombre_profesor ASC
+    `;
+
+    connection.query(sql, (error, results) => {
+        if (error) {
+            console.error('Error al obtener el reporte de profesores:', error);
+            callback(error, null);
+        } else {
+            console.log('Reporte de profesores obtenido:', results);
+            callback(null, results);
+        }
+    });
+}
+
+async function obtenerReporteRecomendacionesFecha(year) {
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT 
+                r.id AS id_recomendacion, 
+                r.autor, 
+                r.titulo, 
+                r.fecha, 
+                p.nombre AS nombre_profesor, 
+                p.departamento_academico AS departamento_profesor
+            FROM 
+                recomendaciones r
+            LEFT JOIN 
+                profesores p ON r.id_profesor = p.idprofesores
+            WHERE 
+                YEAR(r.fecha) = ?;  -- Filtro por el año
+        `;
+        
+        connection.query(query, [year], (err, results) => {
+            if (err) {
+                return reject(err); // En caso de error en la consulta
+            }
+            resolve(results); // Devuelve los resultados de la consulta
+        });
+    });
+}
+
+function obtenerReportesPorProfesor(professorId) {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT * FROM recomendaciones WHERE id_profesor = ?';
+        db.query(query, [professorId], (err, results) => {
+            if (err) {
+                console.error('Error al obtener los reportes:', err);
+                return reject({ success: false, error: 'Error al obtener los reportes' });
+            }
+            resolve(results);
+        });
+    });
+}
+
+async function obtenerReportesProfesor(idProfesor) {
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT 
+                r.id, 
+                r.autor, 
+                r.titulo, 
+                r.fecha, 
+                p.nombre, 
+                p.departamento_academico
+            FROM recomendaciones r
+            INNER JOIN profesores p ON r.id_profesor = p.idprofesores
+            WHERE p.idprofesores = ?
+            ORDER BY r.autor ASC  -- Ordena alfabéticamente por autor
+        `;
+        connection.execute(query, [idProfesor], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+}
+
+function obtenerRecomendacionesPorProfesor(idProfesor, callback) {
+    const query = `
+        SELECT 
+            r.id AS id_recomendacion, 
+            r.autor, 
+            r.titulo, 
+            r.fecha, 
+            IFNULL(p.nombre, 'Profesor eliminado') AS nombre_profesor, 
+            IFNULL(p.departamento_academico, 'N/A') AS departamento_profesor
+        FROM 
+            recomendaciones r
+        LEFT JOIN 
+            profesores p ON r.id_profesor = p.idprofesores
+        WHERE 
+            p.idprofesores = ?
+    `;
+
+    connection.query(query, [idProfesor], (error, results) => {
+        if (error) {
+            callback(error, null);
+        } else {
+            callback(null, results);
+        }
+    });
+}
 
 
-  module.exports = {eliminarRecomendacionPorId,obtenerProfesorPorId ,obtenerProfesores,agregarProfesor,editarProfesor,eliminarProfesor,agregarRecomendacion,obtenerRecomendaciones,actualizarRecomendacion,obtenerRecomendacionPorId};
+
+async function obtenerReportePorFecha(idProfesor, ano) {
+    return new Promise((resolve, reject) => {
+       
+        const query = `
+            SELECT 
+                r.id AS id_recomendacion, 
+                r.autor, 
+                r.titulo, 
+                r.fecha, 
+                IFNULL(p.nombre, 'Profesor eliminado') AS nombre_profesor, 
+                IFNULL(p.departamento_academico, 'N/A') AS departamento_profesor
+            FROM 
+                recomendaciones r
+            LEFT JOIN 
+                profesores p ON r.id_profesor = p.idprofesores
+            WHERE 
+                p.idprofesores = ? AND YEAR(r.fecha) = ?
+        `;
+        
+        connection.query(query, [idProfesor, ano], (error, results) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results); 
+            }
+        });
+    });
+}
+  module.exports = {obtenerRecomendacionPorId,obtenerReportePorFecha,obtenerRecomendacionesPorProfesor,obtenerReportesProfesor,obtenerReportesPorProfesor,obtenerReporteRecomendacionesFecha,obtenerReporteProfesores,eliminarRecomendacionPorId,obtenerProfesorPorId ,obtenerProfesores,agregarProfesor,editarProfesor,eliminarProfesor,agregarRecomendacion,obtenerRecomendaciones,actualizarRecomendacion,obtenerRecomendacionPorId};

@@ -74,7 +74,7 @@
       <a href="edit-professor.html"><button style=" background-color: #ffee00;" class="options_button">Editar Profesor</button></a>
       <a href="reporte.html"><button style="background-color: #ff00e1;" class="options_button">Reporte</button></a>
       <a href="editar.html"><button style="background-color: #00ff00;" class="options_button">Editar</button></a>
-      <a href=""><button style="background-color: #ff0000;" class="options_button">Salir</button></a>
+      <button style="background-color: #ff0000;" class="options_button" id="salir-app">Salir</button>
      </div>
      
 
@@ -84,4 +84,11 @@
   </div>
   
 </body>
+<script>
+  const { ipcRenderer } = require('electron');
+
+document.getElementById('salir-app').addEventListener('click', () => {
+    ipcRenderer.send('cerrar-app');
+});
+</script>
 </html>

@@ -1,9 +1,13 @@
 const { ipcRenderer } = require('electron');
 
-// Función para cargar y mostrar profesores
-async function cargarProfesores() {
+// Referencias al DOM
+const inputBuscar = document.getElementById('input-buscar');
+const botonBuscar = document.getElementById('btn-buscar');
+
+// Función para cargar profesores con filtro
+async function cargarProfesores(filtro = '') {
     try {
-        const profesores = await ipcRenderer.invoke('obtener-profesores');
+        const profesores = await ipcRenderer.invoke('obtener-profesores', filtro);
         mostrarProfesores(profesores);
     } catch (error) {
         console.error('Error al cargar profesores:', error);
@@ -12,14 +16,17 @@ async function cargarProfesores() {
 
 // Función para mostrar los profesores en la tabla
 function mostrarProfesores(profesores) {
-    console.log('Profesores obtenidos:'); 
     const cuerpoTabla = document.getElementById('id-render-profesores');
-    cuerpoTabla.innerHTML = ''; 
+    cuerpoTabla.innerHTML = ''; // Limpiar contenido anterior
+
+    if (profesores.length === 0) {
+        cuerpoTabla.innerHTML = '<tr><td colspan="5">No se encontraron profesores</td></tr>';
+        return;
+    }
 
     profesores.forEach(profesor => {
-        const fila = document.createElement('tr'); 
+        const fila = document.createElement('tr');
 
-        
         fila.innerHTML = `
             <td>${profesor.idprofesores}</td>
             <td>${profesor.nombre}</td>
@@ -28,22 +35,25 @@ function mostrarProfesores(profesores) {
             <td><button type="button" class="delete_button" data-id="${profesor.idprofesores}">Delete</button></td>
         `;
 
-       
         cuerpoTabla.appendChild(fila);
     });
 }
 
+// Evento para búsqueda
+botonBuscar.addEventListener('click', () => {
+    const filtro = inputBuscar.value.trim(); // Capturar el texto del input
+    cargarProfesores(filtro); // Llamar a la función con el filtro
+});
 
-
+// Cargar profesores al inicio
 cargarProfesores();
 
-//funcion para boton edit ya que no se puede usar <a> y enviar data-id a la vez 
+// Función para redirigir al editar
 function botonEditarProfesores(button) {
-    const profesorId = button.dataset.id; 
+    const profesorId = button.dataset.id;
     if (profesorId) {
-        localStorage.setItem('profesorId', profesorId); // Guarda el ID en localStorage
-        
-        window.location.href = 'professor.html'; 
+        localStorage.setItem('profesorId', profesorId);
+        window.location.href = 'professor.html';
     } else {
         console.error('No se encontró el ID del profesor');
     }

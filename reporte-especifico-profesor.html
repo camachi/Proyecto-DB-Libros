@@ -5,21 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Profesor</title>
     <link rel="stylesheet" href="style.css">
-    <script src="renderer.js" defer></script>
-    <script src="borrar-script.js" defer></script>
-    <script src="box-confirmacion.js" defer></script>
+    <script src="renderer-reporte-profesor-especifico.js" defer></script>
+    <script src="pdf-descarga-script.js" defer></script>
+    
 </head>
 <body>
     <div class="content">
 
         <div class="titulo">
-            <h2 style="color: white;">Editar Profesores📚</h2>
+            <h2 style="color: white;">Reporte📚</h2>
             <div class="bugger-dropdown">
                 <div class="menu-container">
                   <button class="menu">Menu</button>
                 <ul class="dropdown-menu">
                    
-                  <li><a href="index.html">Go Back</a></li>
+                  <li><a href="reporte.html">Go Back</a></li>
                     
                 </ul>
         
@@ -29,36 +29,28 @@
 
         <div class="contenido_db">
             <div class="search_db_container">
-                <input id="input-buscar" placeholder="Enter your text..." class="input" name="text" type="text" style="width: 70%;">
-                <button class="search_button" id="btn-buscar">Search</button>
+                <input placeholder="Enter your text..." class="input" name="text" type="text" style="width: 70%;">
+                <button class="search_button">Search</button>
             </div>
             <table>
                 <tr>
                   <th>ID</th>
                   <th>Nombre</th>
                   <th>Departamento Academico</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
+                  <th>Reporte por fecha</th>
+                  <th>Todos los Reportes</th>
                 </tr>
 
-              <tbody id="id-render-profesores">
+              <tbody id="id-render-profesores-reporte">
                  
               </tbody>
               </table>
 
         </div>
-
+        
     </div>
 
-    <div id="modal-confirmacion" class="modal">
-      <div class="modal-content">
-          <p>¿Estás seguro que quieres borrar el profesor?</p>
-          <div class="modal-buttons">
-              <button class="btn-si" id="btn-confirmar">Sí</button>
-              <button class="btn-no" id="btn-cancelar">No</button>
-          </div>
-      </div>
-  </div>
+    
   
 </body>
 </html>
