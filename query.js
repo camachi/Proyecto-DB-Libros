@@ -239,18 +239,23 @@ async function obtenerReporteRecomendacionesFecha(year) {
 function obtenerReportesPorProfesor(professorId) {
     return new Promise((resolve, reject) => {
         const query = 'SELECT * FROM recomendaciones WHERE id_profesor = ?';
-        db.query(query, [professorId], (err, results) => {
+        connection.query(query, [professorId], (err, results) => {
             if (err) {
                 console.error('Error al obtener los reportes:', err);
                 return reject({ success: false, error: 'Error al obtener los reportes' });
             }
+            console.log('Resultados de la consulta:', results); // Verifica los resultados
             resolve(results);
         });
     });
 }
 
+
+
 async function obtenerReportesProfesor(idProfesor) {
     return new Promise((resolve, reject) => {
+        console.log('Conectando para obtener los reportes del profesor con ID:', idProfesor); 
+        
         const query = `
             SELECT 
                 r.id, 
@@ -262,17 +267,21 @@ async function obtenerReportesProfesor(idProfesor) {
             FROM recomendaciones r
             INNER JOIN profesores p ON r.id_profesor = p.idprofesores
             WHERE p.idprofesores = ?
-            ORDER BY r.autor ASC  -- Ordena alfabéticamente por autor
+            ORDER BY r.autor ASC
         `;
+        
         connection.execute(query, [idProfesor], (err, results) => {
             if (err) {
+                console.error('Error al ejecutar el query:', err); 
                 reject(err);
             } else {
+                console.log('Resultados obtenidos:', results); 
                 resolve(results);
             }
         });
     });
 }
+
 
 function obtenerRecomendacionesPorProfesor(idProfesor, callback) {
     const query = `

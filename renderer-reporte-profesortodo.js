@@ -1,31 +1,31 @@
 const { ipcRenderer } = require('electron');
 
 document.addEventListener('DOMContentLoaded', function () {
-    const reportesAlmacenados = localStorage.getItem('reportesProfesor');
-    if (reportesAlmacenados) {
-        const reportes = JSON.parse(reportesAlmacenados);
-        mostrarReportes(reportes);
+    // Obtener el id del profesor desde la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const idProfesor = urlParams.get('id');  // Obtener el ID del profesor
+
+    if (idProfesor) {
+        // Si existe el idProfesor, buscar los reportes del profesor
+        obtenerReportesProfesor(idProfesor);
+    } else {
+        console.error('No se encontró el ID del profesor en la URL');
     }
 
-    const botonesReporte = document.querySelectorAll('.reporte_button');
-    botonesReporte.forEach(boton => {
-        boton.addEventListener('click', async (event) => {
-            const idProfesor = event.target.dataset.id;
+    async function obtenerReportesProfesor(idProfesor) {
+        try {
+            const respuesta = await ipcRenderer.invoke('obtener-reporte-profesor', idProfesor);
 
-            try {
-                const respuesta = await ipcRenderer.invoke('obtener-reporte-profesor', idProfesor);
-
-                if (respuesta.success) {
-                    localStorage.setItem('reportesProfesor', JSON.stringify(respuesta.data));
-                    mostrarReportes(respuesta.data);
-                } else {
-                    console.error('Error al obtener reportes:', respuesta.error);
-                }
-            } catch (error) {
-                console.error('Error al obtener los reportes:', error);
+            if (respuesta.success) {
+                localStorage.setItem('reportesProfesor', JSON.stringify(respuesta.data));
+                mostrarReportes(respuesta.data);
+            } else {
+                console.error('Error al obtener reportes:', respuesta.error);
             }
-        });
-    });
+        } catch (error) {
+            console.error('Error al obtener los reportes:', error);
+        }
+    }
 
     function mostrarReportes(reportes) {
         const tableBody = document.getElementById('id-render-reporte');
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         } else {
             tableBody.innerHTML = '<tr><td colspan="4">No se encontraron reportes para este profesor.</td></tr>';
-            contenedorInfo.innerHTML = '<p>No hay información del profesor.</p>';
+            contenedorInfo.innerHTML = '<p></p>';
         }
     }
 });
