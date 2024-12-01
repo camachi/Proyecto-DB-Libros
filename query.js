@@ -68,16 +68,20 @@ function obtenerRecomendaciones(query, callback) {
     const params = [];
   
     if (query) {
-        if (isValidDate(query)) {
-            // Si el valor tiene formato de fecha, buscamos por fecha
+       
+        if (!isNaN(query)) {
+            querySQL += ' AND r.id = ?';
+            params.push(query);  
+        } else if (isValidDate(query)) {
+            
             querySQL += ' AND DATE(r.fecha) = ?';
             params.push(query);
         } else if (isYear(query)) {
-            // Si el valor es un año, buscamos por año
+            
             querySQL += ' AND YEAR(r.fecha) = ?';
             params.push(query);
         } else {
-            // Si el valor no es fecha ni año, buscamos por autor o título
+            
             querySQL += ' AND (r.autor LIKE ? OR r.titulo LIKE ?)';
             params.push(`%${query}%`, `%${query}%`);
         }
@@ -95,7 +99,8 @@ function obtenerRecomendaciones(query, callback) {
             callback(null, results);
         }
     });
-  }
+}
+
   
 
 // Función para verificar si el valor ingresado es una fecha válida (YYYY-MM-DD)

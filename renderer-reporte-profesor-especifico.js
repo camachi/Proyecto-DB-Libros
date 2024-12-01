@@ -48,11 +48,13 @@ function mostrarProfesores(profesores) {
     });
 }
 
-// Función para filtrar profesores por nombre o departamento
+// Función para filtrar profesores por nombre, departamento o id (exacto)
 function filtrarProfesores(profesores, textoBusqueda) {
     return profesores.filter(profesor => {
+        // Buscar por nombre, departamento o id exacto
         return profesor.nombre.toLowerCase().includes(textoBusqueda.toLowerCase()) ||
-               profesor.departamento_academico.toLowerCase().includes(textoBusqueda.toLowerCase());
+               profesor.departamento_academico.toLowerCase().includes(textoBusqueda.toLowerCase()) ||
+               profesor.idprofesores.toString() === textoBusqueda; // Filtro exacto por id
     });
 }
 
