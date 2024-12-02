@@ -1,0 +1,31 @@
+ Guía de Configuración - Aplicación Electron Local
+
+Esta guía describe cómo instalar y ejecutar la aplicación de manera local. Sigue estos pasos para configurarla correctamente en tu sistema.
+
+---
+
+## Requisitos
+
+1. **Node.js** instalado en tu computadora.
+2. **Git** (opcional) para clonar el repositorio.
+3. **MySQL** instalado y configurado localmente.
+
+---
+
+## Instrucciones de Instalación
+
+### 1. Clonar el repositorio (opcional)
+Si estás utilizando **Git**, clona el repositorio. Si no, descarga el proyecto como archivo ZIP y extráelo.
+```bash
+git clone https:https://github.com/camachi/Proyecto-DB-Libros
+cd tu_repositorio
+
+### 2. Escribe este commando en la consola: npm install
+Esto instalará todas las dependencias necesarias para ejecutar la aplicación.
+
+### 3. Configura el .env con los datos de tu base de datos local
+
+DB_HOST=localhost
+DB_USER=tu_usuario
+DB_PASSWORD=tu_contraseña
+DB_DATABASE=tu_base_de_datos
